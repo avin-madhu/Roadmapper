@@ -19,11 +19,22 @@ export default function Prompter({ setGoals }) {
         if (response.error) {
           console.error(response.error);
         } else {
-          const data = JSON.parse(response.data).map((goal) => {
-            return { goal, done: false };
-          });
-          console.log(data);
+          const data = {
+            data: JSON.parse(response.data).map((goal) => {
+              return { goal, done: false };
+            }),
+            cardId: Math.floor(Math.random() * 100000),
+          };
           setGoals(data);
+
+          // TODO: replace with db
+          if (localStorage.getItem("goalsArray") === null) {
+            localStorage.setItem("goalsArray", JSON.stringify([data]));
+          } else {
+            const goalsArray = JSON.parse(localStorage.getItem("goalsArray"));
+            goalsArray.push(data);
+            localStorage.setItem("goalsArray", JSON.stringify(goalsArray));
+          }
         }
       });
   }

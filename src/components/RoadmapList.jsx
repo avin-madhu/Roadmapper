@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 export default function RoadmapList({ goals, setGoals }) {
   const checkSVG = (
     <svg
@@ -25,20 +24,20 @@ export default function RoadmapList({ goals, setGoals }) {
   );
 
   function handleCheck(index) {
-    const newGoals = [...goals];
-    newGoals[index].done = !newGoals[index].done;
+    const newGoals = { ...goals };
+    newGoals.data[index].done = !newGoals.data[index].done;
     setGoals(newGoals);
   }
 
   return (
     <div
       className={`${
-        goals.length != 0 ? "" : "hidden"
+        goals.data.length != 0 ? "" : "hidden"
       } flex flex-col items-center my-2 border border-black rounded-lg p-4 w-1/4 gap-2`}
     >
       <h3 className="font-bold text-xl">Here are your roadmaps</h3>
       <ul className="max-w-md space-y-1 list-inside">
-        {goals.map((goal, index) => (
+        {goals.data.map((goal, index) => (
           <li
             key={index}
             onClick={() => handleCheck(index)}
