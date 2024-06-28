@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
-import Card from "./Card";
 import Roadmap from "./Roadmap";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./shadcn-ui/card";
 
 export default function CardGrid() {
   let [cards, setCards] = useState([]);
@@ -39,14 +45,35 @@ export default function CardGrid() {
         return (
           <Card
             key={index}
-            title={card.cardTitle}
-            description={card.cardDesc}
-            status={false}
             onClick={() => setCurrentCard(index)}
-          />
+            className="hover:bg-gray-200 hover:shadow-lg cursor-pointer"
+          >
+            <CardHeader>
+              <CardTitle>{card.cardTitle}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>{card.cardDesc}</p>
+            </CardContent>
+            <CardFooter>
+              <div className="text-sm font-bold text-gray-600">
+                {card.status ? "Completed" : "In Progress"}
+              </div>
+            </CardFooter>
+          </Card>
         );
       })}
-      <Card isNew={true} onClick={() => setCurrentCard(-1)} />
+      <Card
+        onClick={() => setCurrentCard(-1)}
+        className="hover:bg-gray-200 hover:shadow-lg cursor-pointer"
+      >
+        <CardHeader></CardHeader>
+        <CardContent>
+          <div className="text-[5em] font-extrabold text-gray-400 text-center">
+            <p>+</p>
+          </div>
+        </CardContent>
+        <CardFooter></CardFooter>
+      </Card>
     </div>
   );
 }
