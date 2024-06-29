@@ -1,29 +1,33 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Prompter from "./Prompter";
 import RoadmapList from "./RoadmapList";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useOutletContext } from "react-router-dom";
 
-export default function Roadmap({ cardId }) {
-  const [goals, setGoals] = useState({ data: [], cardId: 0 });
-  const { cardId1 } = useLoaderData();
+export default function Roadmap() {
+  const { card } = useLoaderData();
+  const [cardState, setCardState] = useState(card);
+  const [cards, setCards] = useOutletContext();
+
+  function updateCard(update) {
+    let _cards = [...cards];
+    const index = _cards.findIndex((card) => card.cardId === update.cardId);
+    _cards[index] = update;
+    localStorage.setItem("cards", JSON.stringify(_cards));
+    setCardState(update);
+    setCards(_cards);
+  }
 
   useEffect(() => {
-    // Load goals on first visit
-    console.log(cardId1);
-    if (cardId1 !== -1) {
-      console.log(JSON.parse(localStorage.getItem("goalsArray")));
-      setGoals(
-        JSON.parse(localStorage.getItem("goalsArray")).filter(
-          (goals) => goals.cardId === cardId1
-        )[0]
-      );
-    }
-  }, [cardId1, setGoals]);
-
+    setCardState(card);
+  }, [card]);
   return (
-    <div className="w-screen flex flex-col items-center">
-      <Prompter setGoals={setGoals} />
-      <RoadmapList goals={goals} setGoals={setGoals} />
+    <div className="w-full flex flex-col items-center">
+      <Prompter
+        updateCardState={setCardState}
+        cards={cards}
+        setCards={setCards}
+      />
+      <RoadmapList card={cardState} updateCard={updateCard} />
     </div>
   );
 }

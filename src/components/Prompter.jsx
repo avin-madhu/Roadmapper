@@ -1,8 +1,10 @@
 import { useRef } from "react";
 import { supabase } from "../supabase";
+import { useNavigate } from "react-router-dom";
 
-export default function Prompter({ setGoals }) {
+export default function Prompter({ updateCardState, cards, setCards }) {
   const promptField = useRef(null);
+  const navigate = useNavigate();
 
   function getRoadmap() {
     const prompt = promptField.current.value;
@@ -20,27 +22,30 @@ export default function Prompter({ setGoals }) {
           console.error(response.error);
         } else {
           const data = {
-            data: JSON.parse(response.data).map((goal) => {
+            goals: JSON.parse(response.data).map((goal) => {
               return { goal, done: false };
             }),
             cardId: Math.floor(Math.random() * 100000),
+            cardTitle: prompt,
+            status: false,
           };
-          setGoals(data);
+          updateCardState(data);
+
+          console.log("p1", cards);
+          const newCards = [...cards, data];
+          setCards(newCards);
+          console.log("p2", newCards);
 
           // TODO: replace with db
-          if (localStorage.getItem("goalsArray") === null) {
-            localStorage.setItem("goalsArray", JSON.stringify([data]));
-          } else {
-            const goalsArray = JSON.parse(localStorage.getItem("goalsArray"));
-            goalsArray.push(data);
-            localStorage.setItem("goalsArray", JSON.stringify(goalsArray));
-          }
+          localStorage.setItem("cards", JSON.stringify(newCards));
+
+          navigate(`/cards/${data.cardId}`);
         }
       });
   }
 
   return (
-    <div className="flex flex-col items-center w-1/4 gap-1 mt-3">
+    <div className="flex flex-col items-center w-1/2 gap-1 mt-3">
       <p className="font-bold text-center">
         What roadmap do you want to generate?
       </p>

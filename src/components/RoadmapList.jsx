@@ -1,55 +1,59 @@
-export default function RoadmapList({ goals, setGoals }) {
-  const checkSVG = (
-    <svg
-      className="w-3.5 h-3.5 me-2 text-green-500 dark:text-green-400 flex-shrink-0"
-      aria-hidden="true"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="currentColor"
-      viewBox="0 0 20 20"
-    >
-      <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-    </svg>
-  );
+import { CheckCircle, GrabIcon, XCircle } from "lucide-react";
+import { List, arrayMove } from "react-movable";
 
-  const uncheckSVG = (
-    <svg
-      className="w-3.5 h-3.5 me-2 text-gray-500 dark:text-gray-400 flex-shrink-0"
-      aria-hidden="true"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="currentColor"
-      viewBox="0 0 20 20"
-    >
-      <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-    </svg>
-  );
-
-  function handleCheck(index) {
-    const newGoals = { ...goals };
-    newGoals.data[index].done = !newGoals.data[index].done;
-    setGoals(newGoals);
+export default function RoadmapList({ card, updateCard }) {
+  function handleClick(index) {
+    const newCard = { ...card };
+    newCard.goals[index].done = !newCard.goals[index].done;
+    newCard.status = newCard.goals.every((item) => item.done);
+    updateCard(newCard);
   }
 
   return (
     <div
       className={`${
-        goals.data.length != 0 ? "" : "hidden"
-      } flex flex-col items-center my-2 border border-black rounded-lg p-4 w-1/4 gap-2`}
+        card.goals.length > 0 ? "" : "hidden"
+      } flex flex-col items-center my-2 border border-black rounded-lg p-4 w-1/2 gap-2`}
     >
-      <h3 className="font-bold text-xl">Here are your roadmaps</h3>
-      <ul className="max-w-md space-y-1 list-inside">
-        {goals.data.map((goal, index) => (
+      <h3 className="font-bold text-xl">Here are is your roadmap</h3>
+      <List
+        lockVertically
+        values={card.goals}
+        onChange={({ oldIndex, newIndex }) => {
+          const movedCard = { ...card };
+          movedCard.goals = arrayMove(movedCard.goals, oldIndex, newIndex);
+          updateCard(movedCard);
+        }}
+        renderList={({ children, props }) => (
+          <ul className="space-y-3 list-inside w-full" {...props}>
+            {children}
+          </ul>
+        )}
+        renderItem={({ value, props }) => (
           <li
-            key={index}
-            onClick={() => handleCheck(index)}
-            className={`${
-              goal.done ? "text-gray-500 line-through" : "font-bold"
-            } flex items-center cursor-pointer`}
+            {...props}
+            onClick={() => handleClick(card.goals.indexOf(value))}
+            className="flex items-center cursor-pointer gap-2 border rounded-lg p-2 hover:bg-gray-200"
           >
-            {goal.done ? checkSVG : uncheckSVG}
-            {goal.goal}
+            {value.done ? (
+              <CheckCircle className="size-4 min-w-4 text-green-500" />
+            ) : (
+              <XCircle className="size-4 min-w-4" />
+            )}
+            <p
+              className={`${
+                value.done ? "text-gray-500 line-through" : "text-black"
+              } text-wrap`}
+            >
+              {value.goal}
+            </p>
+            <GrabIcon
+              data-movable-handle
+              className="size-4 min-w-4 cursor-grab ms-auto"
+            />
           </li>
-        ))}
-      </ul>
+        )}
+      />
     </div>
   );
 }

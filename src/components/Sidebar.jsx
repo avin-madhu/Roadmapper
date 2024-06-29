@@ -1,43 +1,41 @@
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { Circle } from "lucide-react";
+import { NavLink } from "react-router-dom";
+import { Circle, CircleChevronRightIcon, CirclePlusIcon } from "lucide-react";
 
-export default function Sidebar() {
-  let [cards, setCards] = useState([]);
-
-  // Load cards on first visit
-  useEffect(() => {
-    // TODO: replace with db
-    if (localStorage.getItem("cards") === null) {
-      localStorage.setItem(
-        "cards",
-        '[{ "cardId": 12345, "cardTitle": "Learn React", "cardDesc": "Something" },{ "cardId": 12346, "cardTitle": "Learn JS", "cardDesc": "Something else" }]'
-      );
-      setCards([
-        { cardId: 12345, cardTitle: "Learn React", cardDesc: "Something" },
-        { cardId: 12346, cardTitle: "Learn JS", cardDesc: "Something else" },
-      ]);
-    } else {
-      setCards(JSON.parse(localStorage.getItem("cards")));
-    }
-  }, []);
-
+export default function Sidebar({ cards }) {
   return (
     <div className="min-h-[calc(100vh-4rem)] flex flex-col gap-4 pt-4 ps-4 border-r">
       <p className="font-bold">Your Roadmaps</p>
       <div className="flex flex-col gap-2 p-2 ms-1">
         {cards.map((card, index) => {
           return (
-            <Link
+            <NavLink
               key={index}
               to={`/cards/${card.cardId}`}
-              className="flex items-center gap-1 p-2 hover:bg-gray-100"
+              className={({ isActive }) =>
+                "flex items-center gap-1 p-2 rounded-lg hover:bg-gray-100" +
+                (isActive ? " bg-gray-200 hover:bg-gray-300" : "")
+              }
             >
-              <Circle className="w-4 h-4" />
-              <p>{card.cardTitle}</p>
-            </Link>
+              {({ isActive }) => (
+                <>
+                  {isActive ? (
+                    <CircleChevronRightIcon className="min-w-4 min-h-4" />
+                  ) : (
+                    <Circle className="min-w-4 min-h-4" />
+                  )}
+                  <p>{card.cardTitle}</p>
+                </>
+              )}
+            </NavLink>
           );
         })}
+        <NavLink
+          to="/cards/new"
+          className="flex items-center gap-1 p-2 rounded-lg hover:bg-gray-100"
+        >
+          <CirclePlusIcon className="min-w-4 min-h-4" />
+          <p>Create a new roadmap</p>
+        </NavLink>
       </div>
     </div>
   );
