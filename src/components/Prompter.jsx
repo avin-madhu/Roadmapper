@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { supabase } from "../supabase";
 import { useNavigate } from "react-router-dom";
+import { FunctionRegion } from "@supabase/supabase-js";
 
 export default function Prompter({ updateCardState, cards, setCards }) {
   const promptField = useRef(null);
@@ -16,6 +17,7 @@ export default function Prompter({ updateCardState, cards, setCards }) {
         body: {
           query: prompt,
         },
+        region: FunctionRegion.ApSouth1,
       })
       .then((response) => {
         if (response.error) {

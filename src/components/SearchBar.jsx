@@ -9,7 +9,7 @@ export default function SearchBar() {
   const inputRef = useRef(null);
   const dropdownRef = useRef(null);
 
-  const cards = JSON.parse(localStorage.getItem("cards"));
+  const cards = JSON.parse(localStorage.getItem("cards")) || [];
 
   useEffect(() => {
     const focus = () => {
