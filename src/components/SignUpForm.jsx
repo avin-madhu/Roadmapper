@@ -11,7 +11,7 @@ import {
 import { Input } from "./shadcn-ui/input";
 import { Label } from "./shadcn-ui/label";
 
-export function SignUpForm() {
+export default function SignUpForm() {
   return (
     <div className="my-10">
       <Card className="mx-auto max-w-sm">

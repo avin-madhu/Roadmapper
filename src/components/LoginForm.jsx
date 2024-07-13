@@ -10,7 +10,7 @@ import { Input } from "./shadcn-ui/input";
 import { Label } from "./shadcn-ui/label";
 import { Link } from "react-router-dom";
 
-export function LoginForm() {
+export default function LoginForm() {
   return (
     <div className="my-10">
       <Card className="mx-auto max-w-sm">
