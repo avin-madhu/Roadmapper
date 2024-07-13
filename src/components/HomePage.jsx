@@ -7,7 +7,7 @@ export default function HomePage() {
 
   // Load cards on first visit
   useEffect(() => {
-    if (localStorage.getItem("cards") === undefined) {
+    if (localStorage.getItem("cards") === null) {
       localStorage.setItem("cards", "[]");
     } else {
       setCards(JSON.parse(localStorage.getItem("cards")));
