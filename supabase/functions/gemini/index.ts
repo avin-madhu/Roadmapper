@@ -20,6 +20,7 @@ Deno.serve(async (req) => {
     const result = await model.generateContent(prompt);
     const reply = result.response.text();
     console.log(reply)
+    
     // TODO: Handle cases when response is in invalid format (such as when gemini fails to generate content)
     return new Response(reply, {
       headers: { ...corsHeaders, "Content-Type": "text/plain" },
