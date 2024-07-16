@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useEffect, useState } from "react";
-
+import { ThemeProvider } from "./theme-provider"
 export default function HomePage() {
   let [cards, setCards] = useState([]);
 
@@ -15,13 +15,15 @@ export default function HomePage() {
     // TODO: replace with db
   }, []);
   return (
-    <div className="grid grid-cols-5">
-      <div className="col-span-1">
-        <Sidebar cards={cards} />
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <div className="grid grid-cols-5">
+        <div className="col-span-1">
+          <Sidebar cards={cards} />
+        </div>
+        <div className="col-span-4">
+          <Outlet context={[cards, setCards]} />
+        </div>
       </div>
-      <div className="col-span-4">
-        <Outlet context={[cards, setCards]} />
-      </div>
-    </div>
+    </ThemeProvider>
   );
 }
