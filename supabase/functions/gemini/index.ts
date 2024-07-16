@@ -14,7 +14,7 @@ Deno.serve(async (req) => {
     const apiKey = Deno.env.get("GOOGLE_GENAI_API_KEY");
     const genai = new GoogleGenerativeAI(apiKey);
 
-    const prompt = `Generate a roadmap for the following: ${query}. The roadmap should be concise. You should return the goals as a javascript array of strings. do not use code blocks in the response`;
+    const prompt = `Generate a step by step roadmap for the following: ${query}. Use common resources to create it, The roadmap should be concise. Give short words for each step, it should cover all topics in order to study the given subject, each step must be about learning something realted to the subject and not it's features or perfomance, Like for let' say for typescript, you should give like: datatypes, varibale, arrays, for loops and so on to complex topics, You should return the goals as a javascript array of strings. do not use code blocks in the response`;
 
     const model = genai.getGenerativeModel({ model: "gemini-1.5-flash" });
     const result = await model.generateContent(prompt);
