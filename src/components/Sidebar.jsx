@@ -14,8 +14,10 @@ export default function Sidebar({ cards }) {
                 key={index}
                 to={`/cards/${card.cardId}`}
                 className={({ isActive }) =>
-                  "flex items-center gap-1 p-2 rounded-lg hover:bg-gray-100" +
-                  (isActive ? " bg-gray-200 hover:bg-gray-300" : "")
+                  "flex items-center gap-1 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900" +
+                  (isActive
+                    ? " bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-500"
+                    : "")
                 }
               >
                 {({ isActive }) => (
@@ -33,7 +35,7 @@ export default function Sidebar({ cards }) {
           })}
           <NavLink
             to="/cards/new"
-            className="flex items-center gap-1 p-2 rounded-lg hover:bg-gray-100"
+            className="flex items-center gap-1 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900"
           >
             <CirclePlusIcon className="min-w-4 min-h-4" />
             <p>Create a new roadmap</p>

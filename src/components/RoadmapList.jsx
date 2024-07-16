@@ -33,7 +33,7 @@ export default function RoadmapList({ card, updateCard }) {
           <li
             {...props}
             onClick={() => handleClick(card.goals.indexOf(value))}
-            className="flex items-center cursor-pointer gap-2 border rounded-lg p-2 hover:bg-gray-200"
+            className="flex items-center cursor-pointer gap-2 border rounded-lg p-2 hover:bg-gray-200 dark:hover:bg-gray-800"
           >
             {value.done ? (
               <CheckCircle className="size-4 min-w-4 text-green-500" />
@@ -42,7 +42,7 @@ export default function RoadmapList({ card, updateCard }) {
             )}
             <p
               className={`${
-                value.done ? "text-gray-500 line-through" : "text-black"
+                value.done ? "text-gray-500 line-through" : ""
               } text-wrap`}
             >
               {value.goal}

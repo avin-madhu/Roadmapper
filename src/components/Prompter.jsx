@@ -54,7 +54,7 @@ export default function Prompter({ updateCardState, cards, setCards }) {
       <textarea
         id="prompt-field"
         ref={promptField}
-        className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-50"
+        className="block w-full p-4  border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-800 text-base focus:ring-blue-500 focus:border-blue-50"
       />
       <button
         onClick={getRoadmap}

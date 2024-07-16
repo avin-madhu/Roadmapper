@@ -34,11 +34,11 @@ export default function SearchBar() {
         const dropdown = dropdownRef.current;
         const links = dropdown.querySelectorAll("a");
         if (cur > 0) {
-          links[cur].classList.remove("bg-gray-300");
+          links[cur].classList.remove("bg-gray-300 dark:hover:bg-gray-700");
         }
         if (cur < links.length - 1) {
           cur++;
-          links[cur].classList.add("bg-gray-300");
+          links[cur].classList.add("bg-gray-300 dark:hover:bg-gray-700");
         }
       }
     };
@@ -81,7 +81,7 @@ export default function SearchBar() {
         ref={dropdownRef}
         className={`${
           isOpen ? "" : "hidden"
-        } p-2 absolute bg-gray-100 w-full rounded-b-lg`}
+        } p-2 absolute bg-gray-100 dark:bg-gray-800 w-full rounded-b-lg`}
       >
         <ul className="list-none w-full">
           {cards
@@ -90,7 +90,7 @@ export default function SearchBar() {
               <li key={card.cardId} className="w-full">
                 <Link
                   to={`/cards/${card.cardId}`}
-                  className="w-full m-1 p-1 hover:bg-gray-300 focus-visible:bg-gray-300"
+                  className="w-full m-1 p-1 hover:bg-gray-300 dark:hover:bg-gray-700 focus-visible:bg-gray-300"
                 >
                   {card.cardTitle}
                 </Link>
