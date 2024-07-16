@@ -14,7 +14,7 @@ export default function App() {
   return (
     <div>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <div className="dark:bg-gray-950 dark:text-white">
+        <div className="dark:bg-gray-950 dark:text-white min-h-screen">
           <Header />
           <Outlet />
         </div>
