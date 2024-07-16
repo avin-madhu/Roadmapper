@@ -32,7 +32,7 @@ export default function SearchBar() {
         setIsOpen(false);
       } else if (e.key === "ArrowDown") {
         const dropdown = dropdownRef.current;
-        const links = dropdown.querySelectorAll("a");
+        const links = dropdown.querySelectorAll("li");
         if (cur > 0) {
           links[cur].classList.remove("bg-gray-300 dark:hover:bg-gray-700");
         }
@@ -45,6 +45,7 @@ export default function SearchBar() {
 
     const resetDropdown = () => {
       inputRef.current.value = "";
+      setIsOpen(false);
     };
 
     const inp = inputRef.current;
@@ -81,18 +82,20 @@ export default function SearchBar() {
         ref={dropdownRef}
         className={`${
           isOpen ? "" : "hidden"
-        } p-2 absolute bg-gray-100 dark:bg-gray-800 w-full rounded-b-lg`}
+        }  absolute bg-gray-100 dark:bg-gray-800 w-full rounded-b-lg`}
       >
         <ul className="list-none w-full">
           {cards
-            .filter((card) => card.cardTitle.startsWith(searchQuery))
+            .filter((card) =>
+              card.cardTitle.startsWith(searchQuery.trimStart().trimEnd())
+            )
             .map((card) => (
-              <li key={card.cardId} className="w-full">
-                <Link
-                  to={`/cards/${card.cardId}`}
-                  className="w-full m-1 p-1 hover:bg-gray-300 dark:hover:bg-gray-700 focus-visible:bg-gray-300"
-                >
-                  {card.cardTitle}
+              <li
+                key={card.cardId}
+                className="w-full hover:bg-gray-300 dark:hover:bg-gray-700 px-2 py-1 last:rounded-b-lg"
+              >
+                <Link to={`/cards/${card.cardId}`}>
+                  <div className="w-full">{card.cardTitle}</div>
                 </Link>
               </li>
             ))}
