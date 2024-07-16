@@ -5,7 +5,7 @@ import { ThemeProvider } from "./theme-provider";
 export default function Sidebar({ cards }) {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="min-h-[calc(100vh-4rem)] flex flex-col gap-4 pt-4 ps-4 border-r">
+      <div className="min-h-full flex flex-col gap-4 pt-4 ps-4 border-r">
         <p className="font-bold">Your Roadmaps</p>
         <div className="flex flex-col gap-2 p-2 ms-1">
           {cards.map((card, index) => {

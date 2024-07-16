@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useEffect, useState } from "react";
-import { ThemeProvider } from "./theme-provider"
+import { ThemeProvider } from "./theme-provider";
 export default function HomePage() {
   let [cards, setCards] = useState([]);
 
