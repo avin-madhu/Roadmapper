@@ -1,6 +1,6 @@
 import "../assets/css/App.css";
 import Header from "./Header";
-import { ThemeProvider } from "./theme-provider"
+import { ThemeProvider } from "./theme-provider";
 import { Outlet } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -13,9 +13,11 @@ export default function App() {
 
   return (
     <div>
-       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-       <Header />
-       <Outlet />
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <div className="dark:bg-gray-950 dark:text-white">
+          <Header />
+          <Outlet />
+        </div>
       </ThemeProvider>
     </div>
   );
