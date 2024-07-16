@@ -7,6 +7,7 @@ import SignUpForm from "./components/SignUpForm";
 import ForgotPasswordForm from "./components/ForgotPasswordForm";
 import HomePage from "./components/HomePage";
 import CardGrid from "./components/CardGrid";
+import ProfilePage from "./components/ProfilePage";
 
 export const router = createBrowserRouter([
   {
@@ -18,9 +19,6 @@ export const router = createBrowserRouter([
         path: "",
         element: <HomePage />,
         loader: () => {
-          if (localStorage.getItem("isAnon") === "false") {
-            return redirect("/login");
-          }
           return null;
         },
         children: [
@@ -77,6 +75,16 @@ export const router = createBrowserRouter([
       {
         path: "forgot-password",
         element: <ForgotPasswordForm />,
+        loader: () => {
+          if (localStorage.getItem("isAnon") === "true") {
+            return redirect("/");
+          }
+          return null;
+        },
+      },
+      {
+        path: "profile-page",
+        element: <ProfilePage />,
         loader: () => {
           if (localStorage.getItem("isAnon") === "true") {
             return redirect("/");

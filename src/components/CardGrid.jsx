@@ -32,31 +32,35 @@ export default function CardGrid() {
               className="hover:bg-gray-200 hover:shadow-lg cursor-pointer"
             >
               <CardHeader>
-                <CardTitle>{card.cardTitle}</CardTitle>
+          <CardTitle>{card.cardTitle}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p>
-                  {card.goals.filter((goal) => goal.done).length}/
-                  {card.goals.length}
-                </p>
+          <div className="relative w-full h-2 bg-gray-200 rounded-full">
+            <div
+              className="absolute top-0 left-0 h-full bg-green-500 rounded-full"
+              style={{
+                width: `${(card.goals.filter((goal) => goal.done).length / card.goals.length) * 100}%`,
+              }}
+            ></div>
+          </div>
               </CardContent>
               <CardFooter>
-                <div className="flex justify-between items-center w-full text-sm font-bold text-gray-600">
-                  <button
-                    onClick={(event) => {
-                      deleteCard(card.cardId);
-                      event.preventDefault();
-                      event.stopPropagation();
-                    }}
-                  >
-                    <Trash2Icon className="size-4 text-red-600" />
-                  </button>
-                  {card.status ? (
-                    <p className="text-green-500">Completed</p>
-                  ) : (
-                    <p className="text-gray-500">In Progress</p>
-                  )}
-                </div>
+          <div className="flex justify-between items-center w-full text-sm font-bold text-gray-600">
+            <button
+              onClick={(event) => {
+                deleteCard(card.cardId);
+                event.preventDefault();
+                event.stopPropagation();
+              }}
+            >
+              <Trash2Icon className="size-4 text-red-600" />
+            </button>
+            {card.status ? (
+              <p className="text-green-500">Completed</p>
+            ) : (
+              <p className="text-gray-500">In Progress</p>
+            )}
+          </div>
               </CardFooter>
             </Card>
           </Link>

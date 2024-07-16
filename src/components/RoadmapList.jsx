@@ -15,7 +15,7 @@ export default function RoadmapList({ card, updateCard }) {
         card.goals.length > 0 ? "" : "hidden"
       } flex flex-col items-center my-2 border border-black rounded-lg p-4 w-1/2 gap-2`}
     >
-      <h3 className="font-bold text-xl">Here are is your roadmap</h3>
+      <h3 className="font-bold text-xl">Here is your roadmap !!</h3>
       <List
         lockVertically
         values={card.goals}
